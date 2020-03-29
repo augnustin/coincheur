@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import '../../scss/components/header.scss';
 
 const Header = () => (
   <nav className="navbar is-fixed-top is-spaced" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
-      <a className="navbar-item" href="/">
+      <Link to="/" className="navbar-item">
         <h1>Le coincheur confiné</h1>
-      </a>
+      </Link>
 
       <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>

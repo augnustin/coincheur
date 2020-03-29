@@ -24,14 +24,15 @@ app.post('/createTable', (req, res) => {
   const tableId = uuid();
   const {username} = req.body;
   redisInstance.set(tableId, [username]);
-  res.send({tableId: tableId})
-  // res.redirect(`/game?tableId=${tableId}&username=${username}`)
+  // res.send({tableId: tableId})
+  res.redirect(`/game/${tableId}`)
 });
 
-app.post('/joinTable', async (req, res) => {
-  const {tableId, username} = req.body;
-  // res.redirect(`/game?tableId=${tableId}&username=${username}`)
-  res.send({tableId: tableId})
+app.post('/join', async (req, res) => {
+  const tableId = req.body.tableId || uuid();
+  // const {tableId, username} = req.body;
+  res.redirect(`/game/${tableId}`)
+  // res.send({tableId: tableId})
 });
 
 app.get('/game/:tableId', async (req, res) => {
