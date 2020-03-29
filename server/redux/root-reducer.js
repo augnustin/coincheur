@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import actionTypes from './actions.types';
-import {DECK32, DECK52} from '../constants/decks';
+import {DECK32, DECK52} from './constants/decks';
 import redisInstance, {redisKey} from '../redis';
 
 import {
@@ -9,11 +9,12 @@ import {
   EAST,
   SOUTH,
   WEST,
-} from '../constants/positions';
-import {shuffle} from '../utils/array';
+} from './constants/positions';
+import {shuffle} from './utils/array';
 
 const INITIAL_STATE = {
   deck: shuffle(DECK32),
+  isDistributed: false,
   onTable: [],
   players: [{
     position: SOUTH,
@@ -46,38 +47,26 @@ const INITIAL_STATE = {
 
 const rootReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actionTypes.DISTRIBUTE:
-
-      const hands = action.payload;
-      const updatedPlayers = state.players.map( (player, index) => {
-        return {
-          ...player,
-          hand: [...hands[index]],
-        }
-      });
-
-      return {
-        ...state,
-        players: updatedPlayers,
-      };
-
-      // const dealerIndex = state.players.findIndex(p => p.isDealer);
-      // const nbPlayers = state.players.length;
-      // const playersWithHand = state.deck.reduce((players, card, deckIndex) => {
-      //   const nextPlayerIndex = (dealerIndex + deckIndex) % nbPlayers;
-      //   return players.map((player, playerIndex) => {
-      //     if (nextPlayerIndex === playerIndex) {
-      //       return Object.assign({}, player, {
-      //         hand: player.hand.concat(card),
-      //       })
-      //     } else {
-      //       return player;
-      //     }
-      //   })
-      // }, state.players);
-      // return Object.assign({}, state, {
-      //   players: playersWithHand
-      // });
+    case actionTypes.DISTRIBUTE: {
+        const dealerIndex = state.players.findIndex(p => p.isDealer);
+        const nbPlayers = state.players.length;
+        const playersWithHand = state.deck.reduce((players, card, deckIndex) => {
+          const nextPlayerIndex = (dealerIndex + deckIndex) % nbPlayers;
+          return players.map((player, playerIndex) => {
+            if (nextPlayerIndex === playerIndex) {
+              return Object.assign({}, player, {
+                hand: player.hand.concat(card),
+              })
+            } else {
+              return player;
+            }
+          })
+        }, state.players);
+        return Object.assign({}, state, {
+          isDistributed: true,
+          players: playersWithHand
+        });
+      }
     case actionTypes.PLAY_CARD: {
       const card = action.payload;
       const playerIndex = state.players.findIndex(p => p.hand.find(c => c === card));

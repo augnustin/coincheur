@@ -1,11 +1,18 @@
 import actionTypes from './actions.types';
 
-export function distribute(hands) {
+export function distribute() {
   return {
     type: actionTypes.DISTRIBUTE,
-    payload: hands,
+    payload: {},
   }
 };
+
+// export function distribute(hands) {
+//   return {
+//     type: actionTypes.DISTRIBUTE,
+//     payload: hands,
+//   }
+// };
 
 export function playCard(card) {
   return {

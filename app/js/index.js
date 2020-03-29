@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route} from 'react-router-dom';
+import SocketManager from './components/SocketManager';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
@@ -11,7 +12,9 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Route exact path="/" component={LandingPage} />
-      <Route exact path="/game/:tableId" component={GamePage} />
+      <SocketManager>
+        <Route exact path="/game/:tableId" component={GamePage} />
+      </SocketManager>
     </BrowserRouter>
   </Provider>,
   document.getElementById('container')

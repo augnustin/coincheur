@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { distributeSocket, distribute } from '../redux/actions';
-import useSocket from './useSocket';
+import { useSocketContext } from './SocketManager';
 
 import {
   NORTH,
@@ -14,34 +14,22 @@ import Table from './Table.js';
 import Player from './Player.js';
 import Header from './Header.js';
 
-const Game = ({onTable, isDistributed, deck, dealerIndex, nbPlayers, players, distributeSocket, distribute, ...props}) => {
-
+const Game = (props) => {
   const {tableId, username} = props.match.params;
-  // const tableId = 'coinche';
-  // const username = 'tiego';
 
-  const [socket] = useSocket('http://localhost:3000');
-  socket.connect()
+  const {state, socket} = useSocketContext();
+  const {onTable,
+          isDistributed,
+          deck,
+          dealerIndex,
+          nbPlayers,
+          players,
+        } = state;
+
 
   const handleClick = () => {
-    distributeSocket(socket, tableId, deck, dealerIndex, nbPlayers);
+    socket.emit('distribute', distribute());
   }
-
-  useEffect(() => {
-    socket.emit('joinTable', {
-      tableId,
-      username,
-    });
-
-    socket.on('cardsDistributed', hands => {
-      distribute(JSON.parse(hands));
-    });
-
-    return () => {
-      console.log('leaving room');
-      socket.emit('leaveTable', {tableId, username});
-    }
-  }, []);
 
   return (
     <div>

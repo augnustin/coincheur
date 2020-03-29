@@ -1,6 +1,7 @@
 import express from 'express';
 import { v4 as uuid } from 'uuid';
 import redisInstance from './redis';
+import store from './redux/store';
 
 const app = express();
 const cors = require('cors');
@@ -37,47 +38,12 @@ app.get('/game/:tableId', async (req, res) => {
   res.sendFile('build/index.html', {root: `${__dirname}/..`});
 });
 
-// const broadcastToClients = store => next => action => {
-//   console.log(action)
-//   const returnValue = next(action)
-//   // Do the broadcast
-//   return returnValue;
-// };
-
-// const store = createStore(rootReducer, applyMiddleware(...[storeToRedis, broadcastToClients]));
-
-// console.log(store.getState());
-
-// store.dispatch({
-//   type: 'RECEIVE',
-//   payload: {
-//     message: 'hello',
-//   },
-// })
-
-// console.log(store.getState());
 
 io.on('connection', (socket) => {
-  //socket.on('disconnect', reason => console.log(socket.id));
 
-  socket.on('joinTable', data => {
-    const {tableId, username} = data
-    console.log(`User ${username} joining table ${tableId}`)
-    socket.join(tableId)
-  });
-
-  socket.on('leaveTable', data => {
-    console.log(`User ${username} leaving table ${tableId}`)
-    socket.leave(tableId);
-  });
-
-  socket.on('cardsDistributed', (data) => {
-    const {table, hands} = data
-    console.log('Broadcasting to the table', table, data);
-    socket.emit('cardsDistributed', hands);
-    socket.broadcast
-    .to(table)
-    .emit('cardsDistributed', hands);
+  socket.on('distribute', action => {
+    store.dispatch(action);
+    socket.emit('newState', store.getState());
   });
 
 });

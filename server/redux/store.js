@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import rootReducer from './root-reducer';
+import INITIAL_STATE from './root-reducer';
 import redisInstance, {redisKey} from '../redis';
 
 const storeToRedis = store => next => action => {
@@ -10,6 +11,15 @@ const storeToRedis = store => next => action => {
 
 const middlewares = [storeToRedis].concat(process.env.NODE_ENV === 'development' ? logger : []);
 
-const store = createStore(rootReducer, redisInstance.get(redisKey), applyMiddleware(...middlewares));
+//Commented code below is not working. Must look into it. For the sake of the proof of concept 
+
+// const getStore = async redisKey => {
+//   const redisState = await redisInstance.get(redisKey) || INITIAL_STATE;
+//   return createStore(rootReducer, redisState, applyMiddleware(...middlewares));
+// };
+
+// const store =getStore(redisKey);
+
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 export default store;
