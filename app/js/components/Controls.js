@@ -32,6 +32,12 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
   const southPlayer = last(sortedPlayers);
   const isDevelopment = process.env.NODE_ENV !== 'production';
 
+  const explanations = {
+    [NO_DECLARATION]: "Vous faites les enchères à l'oral, et notez le score sur papier.",
+    [FINAL_DECLARATION]: "Vous faites les enchères à l'oral, puis saisissez le contrat pour lancer la partie.",
+    [DECLARATIONS]: "Vous faites les enchères dans l'application.",
+  }
+
   return (
     <div className="commands has-text-centered">
       <div className="wrapper">
@@ -50,18 +56,27 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
             )}
             </ul>
           ) : null}
-          {humanPlayers.length >= 2 && <p><small>Cliquez sur le nom d'un autre joueur pour rejoindre son équipe, et sur le votre pour échanger les places des joueurs adverses.</small></p>}
+          {humanPlayers.length >= 2 && <p><small>Clique sur le nom d'un autre joueur pour rejoindre son équipe, et sur le tiens pour échanger les places des joueurs adverses.</small></p>}
         </div>
         <ul className="section is-vertical is-small actions">
           <li>
-            Mode :
-            <span className="select is-small">
-              <select onChange={e => setPreference({declarationMode: e.target.value})} value={preferences.declarationMode}>
-                <option value={NO_DECLARATION}>Jeu de la carte uniquement</option>
-                <option value={DECLARATIONS}>Avec annonces</option>
-                <option value={FINAL_DECLARATION}>Annonce finale uniquement</option>
-              </select>
-            </span>
+            <div className="field is-small has-addons has-addons-centered">
+              <p className="control">
+                <a className="button is-small is-static is-rounded">
+                  Mode
+                </a>
+              </p>
+              <p className="control">
+                <span className="select is-small">
+                  <select onChange={e => setPreference({declarationMode: e.target.value})} value={preferences.declarationMode}>
+                    <option value={NO_DECLARATION}>Jeu de la carte uniquement</option>
+                    <option value={DECLARATIONS}>Avec annonces</option>
+                    <option value={FINAL_DECLARATION}>Annonce finale uniquement</option>
+                  </select>
+                </span>
+              </p>
+            </div>
+            <p><small>{explanations[preferences.declarationMode]}</small></p>
           </li>
           <li>
             <button
