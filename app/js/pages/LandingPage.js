@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import {localStorageKeys, queryParamToJoin} from '../constants';
+import {selectTableId} from '../redux/selectors/game'
 
-const LandingPage = (props) => {
+const LandingPage = ({location, history, tableId: currentTableId}) => {
 
-  const isJoiningTableId = new URLSearchParams(props.location.search).get(queryParamToJoin);
+  const isJoiningTableId = new URLSearchParams(location.search).get(queryParamToJoin);
 
   const [username, setUsername] = useState(localStorage.getItem(localStorageKeys.USERNAME) || '');
   const [mayNeedHelp, _setMayNeedHelp] = useState(!localStorage.getItem(localStorageKeys.USERNAME) && !isJoiningTableId);
-  const [tableId, setTableId] = useState(isJoiningTableId || '');
+  const [tableId, setTableId] = useState(isJoiningTableId || currentTableId || '');
 
   const setUsernameAndSave = value => {
     setUsername(value);
@@ -26,9 +29,48 @@ const LandingPage = (props) => {
       body: `tableId=${tableId}`,
     })
     .then(res => {
-      props.history.push(res.url.replace(`${window.location.protocol}//${window.location.host}`, ''));
+      history.push(res.url.replace(`${window.location.protocol}//${window.location.host}`, ''));
     })
   };
+
+  const tableInput = text => (
+    <div key="join">
+      {text && <p className="field">{text}</p>}
+      <div className="field has-addons">
+        <div className="control is-expanded">
+          <input className="input" type="text" placeholder="Entrez un nom de table ..." value={tableId} onChange={(e) => setTableId(e.target.value)} />
+        </div>
+        <div className="control">
+          <button className="button is-primary">
+            Rejoindre
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+
+  const createNewTable = label => (
+    <div key="new" className="field">
+      <button className="button is-primary is-large">{label}</button>
+    </div>
+  )
+
+  const orAction = (
+    <p key="or" className="section has-text-centered">- OU -</p>
+  )
+
+  const possibleActions = () => {
+    if (isJoiningTableId) return tableInput('On t\'attend pour jouer sur cette table :');
+    return (currentTableId ? [
+      tableInput('Reprendre ta partie en cours :'),
+      orAction,
+      createNewTable("Créer une nouvelle table"),
+    ] : [
+      createNewTable("Créer une table"),
+      orAction,
+      tableInput(),
+    ])
+  }
 
   return (
     <Layout mode="container">
@@ -46,30 +88,18 @@ const LandingPage = (props) => {
           </div>
         </div>
         <div className="section is-vertical">
-          { !isJoiningTableId ? (
-            <div>
-              <div className="field">
-                <button className="button is-primary is-large">Créer une table</button>
-              </div>
-              <p className="section has-text-centered">- OU -</p>
-            </div>
-          ) : (
-            <p className="field">On t'attend pour jouer sur cette table :</p>
-          )}
-          <div className="field has-addons">
-            <div className="control is-expanded">
-              <input className="input" type="text" placeholder="Entrez un nom de table ..." value={tableId} onChange={(e) => setTableId(e.target.value)} />
-            </div>
-            <div className="control">
-              <button className="button is-primary">
-                Rejoindre
-              </button>
-            </div>
-        </div>
+          {possibleActions()}
         </div>
       </form>
     </Layout>
   );
 };
 
-export default LandingPage;
+// export default LandingPage;
+
+
+const mapStateToProps = createStructuredSelector({
+  tableId: selectTableId,
+});
+
+export default connect(mapStateToProps)(LandingPage);
