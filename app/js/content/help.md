@@ -8,7 +8,7 @@ L'objectif de Coinche.me est de permettre de jouer entre amis à la coinche le p
 
 Dans sa version actuelle, [Coinche.me](https://coinche.me) ne gère que le jeu de la carte. Cela signifie qu'il est nécessaire d'accompagner le jeu d'une communication vocale ou vidéo.
 
-Si vous n'avez pas d'idée, nous recommandons https://meet.infomaniak.com qui permet aussi de démarrer un appel vidéo à plusieurs sans aucun inscription, en accord donc avec la philosophie de [Coinche.me](https://coinche.me).
+Si vous n'avez pas d'idée, nous recommandons https://meet.infomaniak.com qui permet aussi de démarrer un appel vidéo à plusieurs sans aucune inscription, en accord donc avec la philosophie de [Coinche.me](https://coinche.me).
 
 [Coinche.me](https://coinche.me) est compatible sur tous les supports (ordinateur, tablette, smartphone), il y a donc plusieurs manières de s'organiser pour jouer :
 

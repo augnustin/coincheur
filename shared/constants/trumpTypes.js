@@ -12,8 +12,8 @@ export const trumpNames = {
   H: '♥ Coeur',
   D: '♦ Carreau',
   C: '♣ Trèfle',
-  ALL_TRUMP: 'Tout atout',
-  NO_TRUMP: 'Sans atout',
+  ALL_TRUMP: 'Tout Atout',
+  NO_TRUMP: 'Sans Atout',
 }
 
 export default trumpTypes;

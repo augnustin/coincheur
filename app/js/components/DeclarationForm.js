@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
-import { declare, launchGame, distribute } from '../redux/actions/socketActions';
+import { declare, launchGame, distribute, finalDeclare } from '../redux/actions/socketActions';
 import { createStructuredSelector } from 'reselect';
 import Declaration from './Declaration';
 import {trumpNames} from '../../../shared/constants/trumpTypes';
@@ -30,6 +30,7 @@ const DeclarationForm = ({
   currentDeclaration,
   declarationsHistory,
   declare,
+  finalDeclare,
   launchGame,
   distribute,
   isActivePlayer,
@@ -71,26 +72,29 @@ const DeclarationForm = ({
   }, [currentDeclaration]);
 
   const handleChange = (event) => {
-    const target = event.target;
+    const {name, value} = event.target;
     setState({
       ...state,
-      [target.name]: target.value || null,
+      [name]: parseInt(value) || value || null,
     })
   };
 
   const doPass = () => {
-    declare(currentPlayer.index, {
+    declare({
       type: declarationTypes.PASS,
+      playerIndex: currentPlayer.index,
     });
   };
 
   const doDeclare = () => {
-    declare(state.playerIndex || currentPlayer.index, {
+    const declaration = {
+      playerIndex: state.playerIndex || currentPlayer.index,
       type: declarationTypes.DECLARE,
       trumpType: state.trumpType,
       goal: state.goal,
       isCoinched: state.isCoinched,
-    })
+    }
+    onlyFinalDeclaration ? finalDeclare(declaration) : declare(declaration)
   };
 
   const doCoinche = () => {
@@ -178,8 +182,9 @@ const DeclarationForm = ({
         </div>
         <div className="field">
           { onlyFinalDeclaration ?
-            <button className="button is-primary" onClick={e => distribute()}>Redistribuer</button> :
-            <button className="button is-primary" onClick={e => doPass()}>Passer</button>}
+            <p>Tout le monde passe ? <button className="button is-text" onClick={e => (confirm("Etes-vous sûr⸱e de vouloir abandonner la partie en cours ?") && distribute())}>Redistribuer</button></p> :
+            <button className="button is-primary" onClick={e => doPass()}>Passer</button>
+          }
         </div>
       </div>
       {isCoincheVisible ? (
@@ -207,6 +212,7 @@ const mapDispatchToProps = {
   declare,
   launchGame,
   distribute,
+  finalDeclare,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeclarationForm);

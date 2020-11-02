@@ -9,7 +9,7 @@ const ConfigPage = () => {
     <Layout mode="container">
       <div className="content" dangerouslySetInnerHTML={{__html: mdContent}} />
       <div className="has-text-centered">
-        <Link className="button is-primary is-large" to="/">Revenir à l'écran d'accueil</Link>
+        <Link className="button is-primary" to="/">Revenir à l'écran d'accueil</Link>
       </div>
     </Layout>
   );

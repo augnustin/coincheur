@@ -30,7 +30,6 @@ const Game = ({isDistributed, isLastTrick, hasGameStarted, tricks}) => {
         <div className="level-container">
           <div className="level is-mobile">
             <Player position={NORTH} />
-            {hasGameStarted ? <DeclarationReminder /> : null}
           </div>
           <div className="level is-mobile">
             <Player position={WEST} />
@@ -41,8 +40,11 @@ const Game = ({isDistributed, isLastTrick, hasGameStarted, tricks}) => {
           </div>
           <div className="level is-mobile">
             <Player position={SOUTH} />
-            <ScoreReminder />
           </div>
+        </div>
+        <div className="score-container">
+          <ScoreReminder />
+          {hasGameStarted && <DeclarationReminder />}
         </div>
       </div>
     );

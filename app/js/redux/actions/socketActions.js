@@ -1,6 +1,7 @@
 import {socketActionTypes} from '../actionsTypes';
 import gameActionTypes from '../../../../shared/constants/actionsTypes';
 import socketEvents from '../../../../shared/constants/socketEvents';
+import declarationTypes from '../../../../shared/constants/declarationTypes';
 
 export const subscribeServerUpdate = (tableId, username) => {
   return {
@@ -53,8 +54,11 @@ export const collect = playerIndex =>
 export const undo = () =>
   buildSocketDispatchAction(gameActionTypes.UNDO, {})
 
-export const declare = (playerIndex, declaration) =>
-  buildSocketDispatchAction(gameActionTypes.DECLARE, {playerIndex, ...declaration})
+export const declare = (declaration) =>
+  buildSocketDispatchAction(gameActionTypes.DECLARE, declaration)
+
+export const finalDeclare = (playerIndex, declaration) =>
+  buildSocketDispatchAction(gameActionTypes.FINAL_DECLARE, declaration)
 
 export const launchGame = () =>
   buildSocketDispatchAction(gameActionTypes.LAUNCH_GAME, {})

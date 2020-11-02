@@ -34,7 +34,7 @@ const LandingPage = (props) => {
     <Layout mode="container">
       <form className="section is-vertical has-text-centered" action="/join" method="post" onSubmit={e => joinTable(e)}>
         <h1 className="title is-1">Bienvenue</h1>
-        <p className="subtitle">Ici les cartes ont pas le COVID</p>
+        <p className="subtitle">Ici les cartes n'ont pas le COVID</p>
         {mayNeedHelp && (
           <p>
             <Link className="button is-primary" to="/help">Comment ça marche ?</Link>

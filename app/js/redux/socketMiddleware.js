@@ -28,6 +28,7 @@ export default function socketMiddleware() {
     }
 
     if (socketEvent) {
+      console.log(payload)
       socket.emit(
         socketEvent,
         socketEvent === socketEvents.DISPATCH ?

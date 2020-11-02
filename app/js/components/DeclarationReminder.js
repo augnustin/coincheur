@@ -13,38 +13,22 @@ import cardSymbols from '../../images/symbols';
 const DeclarationReminder = ({ players, currentDeclaration, declarationsHistory, isCoinched }) => {
 
 	if (!currentDeclaration) return null;
-
-	const playerName = players.find(p => p.id === currentDeclaration.playerId).name;
+	const playerName = players[parseInt(currentDeclaration.playerIndex)].name;
 
 	const TrumpType = () => {
 		if (currentDeclaration.trumpType === trumpTypes.ALL_TRUMP) {
-			return "tout atout"
+			return "Tout Atout"
 		} else if (currentDeclaration.trumpType === trumpTypes.NO_TRUMP) {
-			return "sans-atouts"
+			return "Sans Atout"
 		} else {
 			return (
-				<span className="icon is-small">
-					<img src={cardSymbols[currentDeclaration.trumpType]}/>
-				</span>
+					<img className="icon is-small" style={{marginLeft: '0.25rem'}} src={cardSymbols[currentDeclaration.trumpType]}/>
 			)
 		}
 	}
 
 	return (
-		<div className="box">
-			<h1 className="title is-4">{playerName}</h1>
-			<div>
-				{`${(isCoinched.length >= 2) ? 'Surcoinchée' : ((isCoinched.length === 1) ? 'Coinchée' : '')}`}
-			</div>
-			<div className="level">
-				<div className="level-left">
-					{currentDeclaration.goal}
-				</div>
-				<div className="level-right">
-					<TrumpType />
-				</div>
-			</div>
-		</div>
+		<p>{playerName} : {currentDeclaration.goal}<TrumpType /> {`${(isCoinched.length >= 2) ? 'Surcoinchée' : ((isCoinched.length === 1) ? 'Coinchée' : '')}`}</p>
 	);
 };
 

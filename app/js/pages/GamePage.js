@@ -11,13 +11,17 @@ const GamePage = ({subscribeServerUpdate, unsubscribeServerUpdate, match: {param
   if (!tableId) return (
     <Redirect to="/" />
   );
+  const username = localStorage.getItem(localStorageKeys.USERNAME);
+  if (!username) return (
+    <Redirect to={`/?join=${tableId}`} />
+  );
 
   useBeforeunload(() => {
     unsubscribeServerUpdate(tableId)
   });
 
   useEffect(() => {
-    subscribeServerUpdate(tableId, localStorage.getItem(localStorageKeys.USERNAME))
+    subscribeServerUpdate(tableId, username)
     return () => {
       // unsubscribeServerUpdate(tableId);
     }

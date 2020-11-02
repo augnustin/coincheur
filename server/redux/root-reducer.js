@@ -188,7 +188,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       };
     };
     case actionTypes.LAUNCH_GAME: {
-
       const dealerIndex = state.players.findIndex(p => p.isDealer);
       const trumpType = selectCurrentTrumpType(state);
       const playersUpdated = state.players.map((p,i) => {
@@ -205,6 +204,12 @@ const rootReducer = (state = INITIAL_STATE, action) => {
         players: playersUpdated,
         hasGameStarted: true,
       }
+    };
+    case actionTypes.FINAL_DECLARE: {
+      return [actionTypes.DECLARE, actionTypes.LAUNCH_GAME].reduce((state, type) => rootReducer(state, {
+        ...action,
+        type,
+      }), state)
     };
     case actionTypes.GET_SCORE: {
       const currentDeclaration = selectCurrentDeclaration(state);
