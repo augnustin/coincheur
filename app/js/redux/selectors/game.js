@@ -12,7 +12,7 @@ export const selectDeck = state => get(state, 'game.deck', []);
 export const selectDeclarationsHistory = state => get(state, 'game.declarationsHistory', []);
 export const selectHasGameStarted = state => get(state, 'game.hasGameStarted');
 export const selectScore = state => get(state, 'game.score', []);
-export const selectPreferences = state => get(state, 'game.preferences', []);
+export const selectPreferences = state => get(state, 'game.preferences', {});
 
 export const selectNbPlayers = createSelector(
   [selectPlayers],

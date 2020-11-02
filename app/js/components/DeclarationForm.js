@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import Declaration from './Declaration';
 import {trumpNames} from '../../../shared/constants/trumpTypes';
 import declarationTypes from '../../../shared/constants/declarationTypes';
-import options from '../../../shared/constants/options';
+import {FINAL_DECLARATION} from '../../../shared/constants/options';
 import { first, last, range } from '../../../shared/utils/array';
 import {
   selectPlayers,
@@ -39,7 +39,7 @@ const DeclarationForm = ({
   preferences,
 }) => {
 
-  const onlyFinalDeclaration = preferences.declarationMode === options.FINAL_DECLARATION;
+  const onlyFinalDeclaration = preferences.declarationMode === FINAL_DECLARATION;
   const canDeclare = onlyFinalDeclaration || isActivePlayer;
 
   const goalOptions = range(8, 16)

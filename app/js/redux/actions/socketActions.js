@@ -36,7 +36,10 @@ const buildSocketDispatchAction = (type, payload) => ({
   }
 })
 
-export const distribute = playerIndex =>
+export const setPreference = (preferences) =>
+  buildSocketDispatchAction(gameActionTypes.SET_PREFERENCE, preferences)
+
+export const distribute = (playerIndex) =>
   buildSocketDispatchAction(gameActionTypes.DISTRIBUTE, {playerIndex})
 
 export const swichTeams = indexes =>

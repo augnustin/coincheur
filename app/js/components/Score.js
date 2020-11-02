@@ -6,7 +6,7 @@ import {
   selectPreferences,
 } from '../redux/selectors/game';
 import {distribute} from '../redux/actions/socketActions';
-import options from '../../../shared/constants/options';
+import {NO_DECLARATION} from '../../../shared/constants/options';
 
 import ScoreBoard from './ScoreBoard';
 import Card from './Card';
@@ -27,7 +27,7 @@ const Score = ({tricks, distribute, preferences}) => {
   const [us, others] = tricks;
   return (
     <div className="commands has-text-centered">
-      {preferences.declarationMode !== options.NO_DECLARATION && <ScoreBoard />}
+      {preferences.declarationMode !== NO_DECLARATION && <ScoreBoard />}
       <div className="row">
         <h2 className="title is-2">Nous</h2>
         <TeamHand tricks={us} />

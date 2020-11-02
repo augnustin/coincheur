@@ -8,7 +8,11 @@ import {
   hasBelote,
   gatherTricks,
 } from '../utils/coinche';
-import options from '../../shared/constants/options';
+import {
+  NO_DECLARATION,
+  FINAL_DECLARATION,
+  DECLARATIONS,
+} from '../../shared/constants/options';
 import {shuffle, first, nextIndex, switchIndexes, firstIndex} from '../../shared/utils/array';
 import {
   selectCurrentDeclaration,
@@ -29,7 +33,7 @@ export const INITIAL_STATE = {
     disconnected: false,
   }),
   preferences: {
-    declarationMode: options.FINAL_DECLARATION,
+    declarationMode: FINAL_DECLARATION,
   },
   score: [
     [0, 0],
@@ -83,6 +87,15 @@ const rootReducer = (state = INITIAL_STATE, action) => {
         players: switchIndexes(state.players, i1PartnerIndex, i2),
       }
     };
+    case actionTypes.SET_PREFERENCE: {
+      return {
+        ...state,
+        preferences: {
+          ...state.preferences,
+          ...action.payload,
+        }
+      }
+    };
     case actionTypes.DISTRIBUTE: {
       const previousDealerIndex = state.players.findIndex(p => p.isDealer);
       const dealerIndex = firstIndex([action.payload.playerIndex, nextIndex(state.players, previousDealerIndex), 0]);
@@ -100,7 +113,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
         ...state,
         tricks: [],
         players: distributeCoinche(playersWithDealer, deck, dealerIndex),
-        hasGameStarted: state.preferences.declarationMode === options.NO_DECLARATION,
+        hasGameStarted: state.preferences.declarationMode === NO_DECLARATION,
       };
     };
     case actionTypes.PLAY_CARD: {

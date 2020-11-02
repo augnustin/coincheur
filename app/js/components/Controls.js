@@ -8,9 +8,10 @@ import {
   selectCurrentPlayer,
   selectPlayers,
   selectTableId,
+  selectPreferences,
 } from '../redux/selectors/game';
 import {queryParamToJoin} from '../constants';
-import { distribute, swichTeams } from '../redux/actions/socketActions';
+import { distribute, swichTeams, setPreference } from '../redux/actions/socketActions';
 import '../../scss/components/controls.scss';
 import {
   NORTH,
@@ -18,10 +19,14 @@ import {
   SOUTH,
   WEST,
 } from '../../../shared/constants/positions';
+import {
+  NO_DECLARATION,
+  FINAL_DECLARATION,
+  DECLARATIONS,
+} from '../../../shared/constants/options';
 
-const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players, tableId}) => {
+const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players, tableId, preferences, setPreference}) => {
   const [isCopied, setIsCopied] = useState(false);
-
   const copyUrlToClipboard = () => {
     navigator.clipboard.writeText(`${document.location.origin}?${queryParamToJoin}=${tableId}`);
     setIsCopied(true);
@@ -54,8 +59,18 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
         </div>
         <ul className="section is-vertical is-small actions">
           <li>
+            Mode :
+            <span className="select is-small">
+              <select onChange={e => setPreference({declarationMode: e.target.value})} value={preferences.declarationMode}>
+                <option value={NO_DECLARATION}>Jeu de la carte uniquement</option>
+                <option value={DECLARATIONS}>Avec annonces</option>
+                <option value={FINAL_DECLARATION}>Annonce finale uniquement</option>
+              </select>
+            </span>
+          </li>
+          <li>
             <button
-              onClick={() => distribute(currentPlayer.id)}
+              onClick={() => distribute(currentPlayer.index)}
               className="button is-primary is-large"
               title={disableDistribute ? 'Il faut 4 joueurs pour démarrer une partie' : ''}
               disabled={disableDistribute}
@@ -82,11 +97,13 @@ const mapStateToProps = createStructuredSelector({
   currentPlayer: selectCurrentPlayer,
   humanPlayers: selectHumanPlayers,
   players: selectPlayers,
+  preferences: selectPreferences,
 });
 
 const mapDispatchToProps = {
   distribute,
   swichTeams,
+  setPreference,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
