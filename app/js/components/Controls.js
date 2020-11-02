@@ -19,6 +19,7 @@ import {
   FINAL_DECLARATION,
   DECLARATIONS,
 } from '../../../shared/constants/options';
+import Tip from './Tip';
 
 const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players, tableId, preferences, setPreference}) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -28,8 +29,7 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
   }
 
   const disableDistribute = humanPlayers.length !== players.length;
-  const sortedPlayers = players.sort((p1, p2) => HTML_POSITIONS.indexOf(p1.position) - HTML_POSITIONS.indexOf(p2.position))
-  const southPlayer = last(sortedPlayers);
+  const [NORTH, WEST, EAST, SOUTH] = players.sort((p1, p2) => HTML_POSITIONS.indexOf(p1.position) - HTML_POSITIONS.indexOf(p2.position))
   const isDevelopment = process.env.NODE_ENV !== 'production';
 
   const explanations = {
@@ -38,6 +38,15 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
     [DECLARATIONS]: "Vous faites les enchères dans l'application.",
   }
 
+  const displayPlayer = (p, i) => (
+    <li key={i}>
+      { p.id ? (
+          <button className="button is-text" onClick={e => swichTeams([SOUTH.index, p.index])}>{p.name}</button>
+        ) : <span>En attente ...</span>
+      }
+    </li>
+  )
+
   return (
     <div className="commands has-text-centered">
       <div className="wrapper">
@@ -45,38 +54,36 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
           <h2 className="title is-4">{pluralize(humanPlayers.length, 'joueur prêt')} :</h2>
           {players.length ? (
             <ul className="players-waiting-list">
-              {sortedPlayers.map((p, i) => (
-                <li key={i}>
-                  { p.id ? (
-                      <button className="button is-text" onClick={e => swichTeams([southPlayer.index, p.index])}>{p.name}</button>
-                    ) : <span>En attente ...</span>
-                  }
-                </li>
-              )
-            )}
+              {[NORTH, WEST].map(displayPlayer)}
+              <li>
+                {humanPlayers.length >= 2 && <Tip>Clique sur le nom d'un autre joueur pour rejoindre son équipe, et sur le tiens pour échanger les places des joueurs adverses.</Tip>}
+              </li>
+              {[EAST, SOUTH].map(displayPlayer)}
             </ul>
           ) : null}
-          {humanPlayers.length >= 2 && <p><small>Clique sur le nom d'un autre joueur pour rejoindre son équipe, et sur le tiens pour échanger les places des joueurs adverses.</small></p>}
+
         </div>
         <ul className="section is-vertical is-small actions">
           <li>
-            <div className="field is-small has-addons has-addons-centered">
-              <p className="control">
-                <a className="button is-small is-static is-rounded">
-                  Mode
-                </a>
-              </p>
-              <p className="control">
-                <span className="select is-small">
-                  <select onChange={e => setPreference({declarationMode: e.target.value})} value={preferences.declarationMode}>
-                    <option value={NO_DECLARATION}>Jeu de la carte uniquement</option>
-                    <option value={DECLARATIONS}>Avec annonces</option>
-                    <option value={FINAL_DECLARATION}>Annonce finale uniquement</option>
-                  </select>
-                </span>
-              </p>
+            <div className="mode-selector">
+              <div className="field is-small has-addons has-addons-centered">
+                <p className="control">
+                  <a className="button is-small is-static is-rounded">
+                    Mode
+                  </a>
+                </p>
+                <p className="control">
+                  <span className="select is-small">
+                    <select onChange={e => setPreference({declarationMode: e.target.value})} value={preferences.declarationMode}>
+                      <option value={NO_DECLARATION}>Jeu de la carte uniquement</option>
+                      <option value={DECLARATIONS}>Avec annonces</option>
+                      <option value={FINAL_DECLARATION}>Annonce finale uniquement</option>
+                    </select>
+                  </span>
+                </p>
+              </div>
+              <Tip position="left">{explanations[preferences.declarationMode]}</Tip>
             </div>
-            <p><small>{explanations[preferences.declarationMode]}</small></p>
           </li>
           <li>
             <button

@@ -1,0 +1,51 @@
+@import '../variables';
+
+.tip {
+  position: relative;
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+  &.is-on {
+    .notification {
+      display: block;
+      max-height: 300px;
+    }
+  }
+  .notification {
+    transition: max-height 0.2s linear;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+    background: $yellow;
+    color: $black;
+    border-radius: 5px;
+    width: 250px;
+    margin-bottom: 0.5rem;
+    left: 0;
+    right: 0;
+    bottom: 120%;
+    margin: auto;
+
+    // &:after {
+    //   position: absolute;
+    //   width: 1rem;
+    //   height: 1rem;
+    //   bottom: 0;
+    //   content: '';
+    //   transform: rotate(45deg);
+    //   background: $yellow;
+    // }
+
+    p {
+      padding: 1rem;
+    }
+
+    &.is-left {
+      left: auto;
+      right: -2rem;
+    }
+  }
+}

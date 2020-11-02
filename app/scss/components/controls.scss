@@ -9,9 +9,19 @@
 }
 
 .wrapper {
-  max-width: 100%;;
+  max-width: 100%;
+  @include mobile {
+    width: 100%;
+  }
 }
 
+.mode-selector {
+  display: flex;
+  justify-content: center;
+  .tip {
+    margin-left: 1rem;
+  }
+}
 
 .waiting {
   .title {
@@ -29,7 +39,8 @@ ul.players-waiting-list {
     margin-bottom: 3rem;
   }
     li {
-    &:nth-child(2), &:nth-child(3) {
+      margin-top: 1rem;
+    &:nth-child(2), &:nth-child(3), &:nth-child(4) {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -40,7 +51,15 @@ ul.players-waiting-list {
       left: 0;
     }
     &:nth-child(3) {
+      left: 0;
       right: 0;
+    }
+    &:nth-child(4) {
+      right: 0;
+    }
+    &:nth-child(5) {
+      position: relative;
+      top: 1rem;
     }
     &:first-child {
       margin-bottom: 4rem;
