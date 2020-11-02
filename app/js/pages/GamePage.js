@@ -1,13 +1,15 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Redirect } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 import { subscribeServerUpdate, unsubscribeServerUpdate } from '../redux/actions/socketActions';
+import {selectGameId} from '../redux/selectors/game'
 import Layout from '../components/Layout';
 import Game from '../components/Game';
 import {localStorageKeys} from '../constants';
 
-const GamePage = ({subscribeServerUpdate, unsubscribeServerUpdate, match: {params: {tableId}}}) => {
+const GamePage = ({gameId, subscribeServerUpdate, unsubscribeServerUpdate, match: {params: {tableId}}}) => {
   if (!tableId) return (
     <Redirect to="/" />
   );
@@ -21,11 +23,12 @@ const GamePage = ({subscribeServerUpdate, unsubscribeServerUpdate, match: {param
   });
 
   useEffect(() => {
+    console.log('coucou', gameId)
     subscribeServerUpdate(tableId, username)
-    return () => {
-      // unsubscribeServerUpdate(tableId);
-    }
-  }, []);
+    // return () => {
+    //   // unsubscribeServerUpdate(tableId);
+    // }
+  }, [gameId]);
 
   return (
     <Layout>
@@ -34,9 +37,14 @@ const GamePage = ({subscribeServerUpdate, unsubscribeServerUpdate, match: {param
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  gameId: selectGameId,
+});
+
+
 const mapDispatchToProps = {
   subscribeServerUpdate,
   unsubscribeServerUpdate
 }
 
-export default connect(null, mapDispatchToProps)(GamePage);
+export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

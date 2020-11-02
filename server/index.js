@@ -49,7 +49,7 @@ const dispatchActionAndBroadcastNewState = async (tableId, action) => {
   return emitEachInRoom(io, tableId, socketEvents.UPDATED_STATE, socketId => subjectiveState({tableId, ...state}, socketId));
 }
 
-// try {
+try {
   io.on('connection', socket => {
     const playerId = process.env.IGNORE_COOKIE ? uuid() : cookie.parse(socket.handshake.headers.cookie || '')['connect.sid'];
     console.log('New socket connection', socket.id, playerId)
@@ -72,10 +72,10 @@ const dispatchActionAndBroadcastNewState = async (tableId, action) => {
       console.log('disconnected', socket.id);
     })
   });
-// } catch(e) {
-//   console.error('Socket error:')
-//   console.error(e);
-// }
+} catch(e) {
+  console.error('Socket error:')
+  console.error(e);
+}
 
 server.listen(PORT, () => {
   console.log(`Le coincheur listening on port ${PORT}!`)

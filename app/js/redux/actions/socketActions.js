@@ -36,6 +36,9 @@ const buildSocketDispatchAction = (type, payload) => ({
   }
 })
 
+export const reset = () =>
+  buildSocketDispatchAction(gameActionTypes.RESET, {})
+
 export const setPreference = (preferences) =>
   buildSocketDispatchAction(gameActionTypes.SET_PREFERENCE, preferences)
 
@@ -60,7 +63,7 @@ export const undo = () =>
 export const declare = (declaration) =>
   buildSocketDispatchAction(gameActionTypes.DECLARE, declaration)
 
-export const finalDeclare = (playerIndex, declaration) =>
+export const finalDeclare = (declaration) =>
   buildSocketDispatchAction(gameActionTypes.FINAL_DECLARE, declaration)
 
 export const launchGame = () =>

@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import actionTypes from './actionTypes';
 import {DECK32} from '../constants/decks';
 import {
@@ -21,7 +22,8 @@ import {
   selectTeams,
 } from './selectors';
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE = () => ({
+  gameId: uuid(),
   hasGameStarted: false,
   declarationsHistory: [],
   tricks: [],
@@ -33,15 +35,18 @@ export const INITIAL_STATE = {
     disconnected: false,
   }),
   preferences: {
-    declarationMode: FINAL_DECLARATION,
+    declarationMode: NO_DECLARATION,
   },
   score: [
     [0, 0],
   ],
-};
+});
 
-const rootReducer = (state = INITIAL_STATE, action) => {
+const rootReducer = (state = INITIAL_STATE(), action) => {
   switch (action.type) {
+    case actionTypes.RESET:
+      console.log('reseted !')
+      return INITIAL_STATE();
     case actionTypes.JOIN:
       const {playerId, playerName, socketId} = action.payload;
       const samePlayerIndex = state.players.findIndex(p => p.id === playerId);

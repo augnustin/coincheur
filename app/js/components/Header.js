@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import '../../scss/components/header.scss';
-import { undo, distribute } from '../redux/actions/socketActions';
+import { undo, distribute, reset } from '../redux/actions/socketActions';
 import { toggleIsLastTrickVisible } from '../redux/actions/localActions';
 import {isArray, isFunction} from '../../../shared/utils/boolean';
 import {selectCurrentPlayer, selectNbPlayers, selectTableId} from '../redux/selectors/game'
 
-const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVisible, tableId}) => {
+const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVisible, tableId, reset}) => {
   const [menuShown, showMenu] = useState(false);
 
   const toggleMenu = e => showMenu(!menuShown);
@@ -23,20 +23,28 @@ const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVi
     label: 'Partie en cours',
     to: `/game/${tableId}`,
     dropdown: [{
+      label: 'Revoir le dernier pli',
+      onClick: e => {
+        // toggleMenu();
+        toggleIsLastTrickVisible();
+      },
+    }, {
       label: 'Annuler l\'action précédente',
       onClick: e => undo(),
     }, {
       label: 'Redistribuer',
       onClick: e => {
-        if (window.confirm('Voulez-vous vraiment redistribuer une nouvelle partie et annuler celle en cours ?')) {
+        if (window.confirm('Es-tu sûr⸱e de vouloir abandonner la partie en cours ?')) {
           distribute(currentPlayer.id)
         }
       },
     }, {
-      label: 'Revoir le dernier pli',
+      label: 'Hard reset : si tout est planté :(',
       onClick: e => {
-        toggleMenu();
-        toggleIsLastTrickVisible();
+        if (window.confirm('On repart à zéro ?')) {
+          // toggleMenu();
+          reset()
+        }
       },
     }]
   }] : [])
@@ -59,7 +67,7 @@ const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVi
     if (entry.to)
       return <Link key={entry.label} className="navbar-item" to={entry.to}>{entry.label}</Link>;
     if (isFunction(entry.onClick))
-      return <a key={entry.label} className="navbar-item" onClick={e => (entry.onClick() && toggleMenu())}>{entry.label}</a>;
+      return <a key={entry.label} className="navbar-item" onClick={e => {toggleMenu(); entry.onClick()}}>{entry.label}</a>;
   }
 
   return (
@@ -94,6 +102,7 @@ const mapDispatchToProps = {
   distribute,
   undo,
   toggleIsLastTrickVisible,
+  reset,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

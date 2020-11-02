@@ -10,6 +10,7 @@ const actionTypes = {
   DECLARE: 'DECLARE',
   LAUNCH_GAME: 'LAUNCH_GAME',
   GET_SCORE: 'GET_SCORE',
+  RESET: 'RESET',
 };
 
 export default actionTypes;

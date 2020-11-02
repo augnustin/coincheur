@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
     case socketActionTypes.UPDATED_SERVER_STATE:
       return action.payload;
     case socketActionTypes.RESET_LOCAL_GAME:
-      return {};
+      return state;
     default:
       return state;
   };

@@ -13,12 +13,7 @@ import {
 import {queryParamToJoin} from '../constants';
 import { distribute, swichTeams, setPreference } from '../redux/actions/socketActions';
 import '../../scss/components/controls.scss';
-import {
-  NORTH,
-  EAST,
-  SOUTH,
-  WEST,
-} from '../../../shared/constants/positions';
+import {HTML_POSITIONS} from '../../../shared/constants/positions';
 import {
   NO_DECLARATION,
   FINAL_DECLARATION,
@@ -33,7 +28,7 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
   }
 
   const disableDistribute = humanPlayers.length !== players.length;
-  const sortedPlayers = [NORTH, WEST, EAST, SOUTH].map(pos => players.find(p => p.position === pos));
+  const sortedPlayers = players.sort((p1, p2) => HTML_POSITIONS.indexOf(p1.position) - HTML_POSITIONS.indexOf(p2.position))
   const southPlayer = last(sortedPlayers);
   const isDevelopment = process.env.NODE_ENV !== 'production';
 

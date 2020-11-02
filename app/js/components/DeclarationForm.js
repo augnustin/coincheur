@@ -182,7 +182,7 @@ const DeclarationForm = ({
         </div>
         <div className="field">
           { onlyFinalDeclaration ?
-            <p>Tout le monde passe ? <button className="button is-text" onClick={e => (confirm("Etes-vous sûr⸱e de vouloir abandonner la partie en cours ?") && distribute())}>Redistribuer</button></p> :
+            <p>Tout le monde passe ? <button className="button is-text" onClick={e => (confirm("Es-tu sûr⸱e de vouloir abandonner la partie en cours ?") && distribute())}>Redistribuer</button></p> :
             <button className="button is-primary" onClick={e => doPass()}>Passer</button>
           }
         </div>

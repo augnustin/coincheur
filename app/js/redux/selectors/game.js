@@ -5,6 +5,7 @@ import {last, partition} from '../../../../shared/utils/array';
 import {equals} from '../../../../shared/utils/player';
 import declarationTypes from '../../../../shared/constants/declarationTypes';
 
+export const selectGameId = state => get(state, 'game.gameId');
 export const selectTableId = state => get(state, 'game.tableId');
 export const selectPlayers = state => get(state, 'game.players', []);
 export const selectTricks = state => get(state, 'game.tricks', []);
