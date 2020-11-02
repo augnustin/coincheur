@@ -11,7 +11,7 @@ const LandingPage = ({location, history, tableId: currentTableId}) => {
   const isJoiningTableId = new URLSearchParams(location.search).get(queryParamToJoin);
 
   const [username, setUsername] = useState(localStorage.getItem(localStorageKeys.USERNAME) || '');
-  const [mayNeedHelp, _setMayNeedHelp] = useState(!localStorage.getItem(localStorageKeys.USERNAME) && !isJoiningTableId);
+  const [mayNeedHelp, _setMayNeedHelp] = useState(!username && !isJoiningTableId);
   const [tableId, setTableId] = useState(isJoiningTableId || currentTableId || '');
 
   const setUsernameAndSave = value => {
