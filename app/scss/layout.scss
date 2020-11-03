@@ -78,7 +78,9 @@ body {
     .commands {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      @include tablet {
+        justify-content: space-around;
+      }
       height: 100%;
       margin-top: 0;
       align-items: center;

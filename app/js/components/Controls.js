@@ -30,7 +30,7 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
 
   const disableDistribute = humanPlayers.length !== players.length;
   const [NORTH, WEST, EAST, SOUTH] = players.sort((p1, p2) => HTML_POSITIONS.indexOf(p1.position) - HTML_POSITIONS.indexOf(p2.position))
-  const isDevelopment = process.env.NODE_ENV !== 'production';
+  const isDevelopment = false // process.env.NODE_ENV !== 'production';
 
   const explanations = {
     [NO_DECLARATION]: "Vous faites les enchères à l'oral, et notez le score sur papier.",

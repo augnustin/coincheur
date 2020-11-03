@@ -3,8 +3,9 @@
 .tip {
   position: relative;
   img {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
   }
   &.is-on {
     .notification {
@@ -45,7 +46,7 @@
 
     &.is-left {
       left: auto;
-      right: -2rem;
+      right: -1rem;
     }
   }
 }

@@ -18,6 +18,10 @@
 .mode-selector {
   display: flex;
   justify-content: center;
+  align-items: center;
+  .field {
+    margin: 0;
+  }
   .tip {
     margin-left: 1rem;
   }
@@ -34,19 +38,30 @@
 ul.players-waiting-list {
   position: relative;
   max-width: 100%;
-  margin-bottom: 1rem;
-  @include desktop {
-    margin-bottom: 3rem;
+  margin-top: 1rem;
+  // margin-bottom: 1rem;
+  min-height: 10rem;
+  @include tablet {
+    margin-top: 3rem;
+    // margin-bottom: 3rem;
   }
-    li {
-      margin-top: 1rem;
+  li {
+    // margin-top: 1rem;
     &:nth-child(2), &:nth-child(3), &:nth-child(4) {
       position: absolute;
       top: 0;
       bottom: 0;
       margin: auto;
-      height: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
     }
+    // &:first-child {
+    //   margin-bottom: 4rem;
+    //   @include desktop {
+    //     margin-bottom: 8rem;
+    //   }
+    // }
     &:nth-child(2) {
       left: 0;
     }
@@ -58,20 +73,21 @@ ul.players-waiting-list {
       right: 0;
     }
     &:nth-child(5) {
-      position: relative;
-      top: 1rem;
-    }
-    &:first-child {
-      margin-bottom: 4rem;
-      @include desktop {
-        margin-bottom: 8rem;
-      }
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 }
 
 ul.actions {
   li {
-    margin-bottom: 2rem;;
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+    p {
+      margin-top: 0.5rem;
+    }
   }
 }
