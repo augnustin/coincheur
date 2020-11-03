@@ -42,21 +42,21 @@ const Game = ({isDistributed, isLastTrick, hasGameStarted, tricks}) => {
             <Player position={SOUTH} />
           </div>
         </div>
-        <div className="score-container">
-          <ScoreReminder />
-          {hasGameStarted && <DeclarationReminder />}
-        </div>
       </div>
     );
   }
 
-  const GameComponent = () => {
-    if (!isDistributed && !tricks.length) return <Controls />;
+  if (!isDistributed && !tricks.length) return <Controls />;
 
-    return (isLastTrick) ? <Score /> : <GameTable />;
-  }
-
-  return GameComponent();
+  return (
+    <div>
+      <div className="score-container">
+        <ScoreReminder />
+        {hasGameStarted && <DeclarationReminder />}
+      </div>
+      {isLastTrick ? <Score /> : <GameTable />}
+    </div>
+  )
 }
 
 const mapStateToProps = createStructuredSelector({

@@ -13,4 +13,18 @@
     max-width: 3*$card_width;
     margin: auto;
   }
+  &.with-tricks {
+    margin-bottom: 3rem;
+  }
+
+  .trick {
+    display: flex;
+    width: 1.5*$card_width;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+    &:nth-child(even) {
+      position: relative;
+      top: 2rem;
+    }
+  }
 }

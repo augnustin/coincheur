@@ -13,10 +13,10 @@ import Card from './Card';
 
 const TeamHand = ({tricks}) => {
   return (
-    <div className="hand">
+    <div className="hand with-tricks">
       {
         tricks.length
-        ? tricks.map(({cards}) => cards.map(c => <Card key={c} value={c} />))
+        ? tricks.map(({cards}, i) => <div key={i} className="trick">{cards.map(c => <Card key={c} value={c} />)}</div>)
         : <p>Aucun pli :(</p>
       }
     </div>
@@ -29,11 +29,11 @@ const Score = ({tricks, distribute, preferences}) => {
     <div className="commands has-text-centered">
       {preferences.declarationMode !== NO_DECLARATION && <ScoreBoard />}
       <div className="row">
-        <h2 className="title is-2">Nous</h2>
+        <h4 className="title is-4">Nous</h4>
         <TeamHand tricks={us} />
       </div>
       <div className="row">
-        <h2 className="title is-2">Eux</h2>
+        <h4 className="title is-4">Eux</h4>
         <TeamHand tricks={others} />
       </div>
       <button className="button is-primary is-large" onClick={() => distribute()}>Redistribuer</button>

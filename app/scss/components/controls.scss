@@ -88,8 +88,8 @@ ul.actions {
     &:not(:last-child) {
       margin-bottom: 2rem;
     }
-    // p {
-    //   margin-top: 0.5rem;
-    // }
+    p.explain {
+      margin-top: 0.5rem;
+    }
   }
 }

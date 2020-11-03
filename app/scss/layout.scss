@@ -4,6 +4,7 @@ html {
 
 body {
   @include background();
+  // min-height: 100vh;
   // background: url(../images/leather_1.png);
   // background-color: $background;
   // @media screen and (max-width: $tablet) {
@@ -78,17 +79,20 @@ body {
   }
 
   &.is-full-screen {
-    height: 100vh;
+    min-height: 100vh;
     padding: 1rem;
     padding-top: $navbar-height + 1.5rem;
+    @include mobile {
+      padding-top: $navbar-height + 0.5rem;
 
+    }
     .commands {
       display: flex;
       flex-direction: column;
       @include tablet {
         justify-content: space-around;
       }
-      height: 100%;
+      min-height: 100%;
       margin-top: 0;
       align-items: center;
       .row {
