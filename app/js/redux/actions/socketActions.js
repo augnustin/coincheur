@@ -45,6 +45,9 @@ export const setPreference = (preferences) =>
 export const distribute = (playerIndex) =>
   buildSocketDispatchAction(gameActionTypes.DISTRIBUTE, {playerIndex})
 
+export const redistribute = (score) =>
+  buildSocketDispatchAction(gameActionTypes.DISTRIBUTE, {score})
+
 export const swichTeams = indexes =>
   buildSocketDispatchAction(gameActionTypes.SWITCH_TEAMS, {indexes})
 

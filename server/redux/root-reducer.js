@@ -45,7 +45,6 @@ export const INITIAL_STATE = () => ({
 const rootReducer = (state = INITIAL_STATE(), action) => {
   switch (action.type) {
     case actionTypes.RESET:
-      console.log('reseted !')
       return INITIAL_STATE();
     case actionTypes.JOIN:
       const {playerId, playerName, socketId} = action.payload;
@@ -114,11 +113,14 @@ const rootReducer = (state = INITIAL_STATE(), action) => {
       }));
       const deck = cutDeck(state.tricks.length ? gatherTricks(state.tricks) : shuffle(DECK32));
 
+      const score = action.payload.score ? state.score.concat([action.payload.score]) : state.score
+
       return {
         ...state,
         tricks: [],
         players: distributeCoinche(playersWithDealer, deck, dealerIndex),
         hasGameStarted: state.preferences.declarationMode === NO_DECLARATION,
+        score,
       };
     };
     case actionTypes.PLAY_CARD: {
@@ -170,6 +172,8 @@ const rootReducer = (state = INITIAL_STATE(), action) => {
         playerIndex,
         cards: state.players.map(p => p.onTable).filter(c => c),
       };
+      console.log(newTrick)
+      console.log(newTrick.cards)
       if (newTrick.cards.length < state.players.length) {
         return state;
       }

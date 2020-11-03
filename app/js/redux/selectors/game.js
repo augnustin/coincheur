@@ -9,7 +9,6 @@ export const selectGameId = state => get(state, 'game.gameId');
 export const selectTableId = state => get(state, 'game.tableId');
 export const selectPlayers = state => get(state, 'game.players', []);
 export const selectTricks = state => get(state, 'game.tricks', []);
-export const selectDeck = state => get(state, 'game.deck', []);
 export const selectDeclarationsHistory = state => get(state, 'game.declarationsHistory', []);
 export const selectHasGameStarted = state => get(state, 'game.hasGameStarted');
 export const selectScore = state => get(state, 'game.score', []);
@@ -51,8 +50,8 @@ export const selectIsDistributed = createSelector(
 );
 
 export const selectIsLastTrick = createSelector(
-  [selectDeck, selectPlayers, selectTricks],
-  (deck, players, tricks) => players.every(p => p.hand.length === 0),
+  [selectPlayers],
+  (players) => players.every(p => p.hand.length === 0 && !p.onTable),
 );
 
 export const selectOnTable = createSelector(

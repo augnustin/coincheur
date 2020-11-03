@@ -12,7 +12,7 @@ import '../../scss/components/LastTrick.scss';
 const LastTrick = ({isLastTrickVisible, toggleIsLastTrickVisible, lastTrick, currentPlayer}) => {
 
   return (
-    <div className={`overlay ${isLastTrickVisible ? 'isVisible' : ''}`} onClick={e => toggleIsLastTrickVisible()} >
+    <div className={`overlay ${isLastTrickVisible ? 'is-visible' : ''}`} onClick={e => toggleIsLastTrickVisible()} >
       <div className="overlay-content">
         { (lastTrick) ?
           shift(lastTrick.cards, currentPlayer.index).map( c => <Card key={c} value={c} /> ) :

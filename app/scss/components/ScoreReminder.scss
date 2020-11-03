@@ -4,8 +4,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: 6vh;
-  margin-right: 5vw;
+  margin-top: 5rem;
+  margin-right: 3rem;
 
   .score-table {
     background: none;
@@ -14,4 +14,25 @@
       text-align: center;
     }
   }
+
+  @include desktop {
+    margin-right: 5rem;
+  }
+
+  @include mobile {
+    top: 1.3rem;
+    left: 0;
+    width: 6rem;
+    margin-top: 0;
+    margin-right: 0;
+    margin: auto;
+
+    .score-table {
+      font-size: 0.8rem;
+      td {
+        padding: 0.5rem 0.5rem;
+      }
+    }
+  }
+
 }

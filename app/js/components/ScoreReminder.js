@@ -4,10 +4,28 @@ import { createStructuredSelector } from 'reselect';
 import {
 	selectScore,
 } from '../redux/selectors/game';
+import {last} from '../../../shared/utils/array';
 
 import '../../scss/components/ScoreReminder.scss';
 
-const ScoreReminder = ({ score }) => {
+const ScoreReminder = (props) => {
+	const score = props.onlyLast ? [last(props.score)] : props.score;
+
+	const sumScore = score => score.reduce(([us_acc, others_acc], [us, others]) => {
+		return [us_acc + us, others_acc + others];
+	}, [0, 0]);
+
+	const displayScore = (_, index, scores) => {
+		const [us, others] = sumScore(scores.slice(0, index+1));
+		if (props.onlyLast && (index+1 < scores.length)) return;
+		return (
+			<tr key={index}>
+				<td>{us}</td>
+				<td>{others}</td>
+			</tr>
+		)
+	}
+
 	return (
 		<table className="table score-table is-fullwidth">
 			<thead>
@@ -17,12 +35,7 @@ const ScoreReminder = ({ score }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{score.map( ([us, others], index) =>
-					<tr key={index}>
-						<td>{us}</td>
-						<td>{others}</td>
-					</tr>
-				)}
+				{props.score.map(displayScore)}
 			</tbody>
 		</table>
 	);

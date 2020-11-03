@@ -51,7 +51,7 @@ const Game = ({isDistributed, isLastTrick, hasGameStarted, tricks}) => {
   return (
     <div>
       <div className="score-container">
-        <ScoreReminder />
+        <ScoreReminder onlyLast={true} />
         {hasGameStarted && <DeclarationReminder />}
       </div>
       {isLastTrick ? <Score /> : <GameTable />}
