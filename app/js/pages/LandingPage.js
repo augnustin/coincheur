@@ -50,7 +50,7 @@ const LandingPage = ({location, history, tableId: currentTableId}) => {
   )
 
   const createNewTable = label => (
-    <button className="button is-primary is-large">{label}</button>
+    <button key="button" className="button is-primary is-large">{label}</button>
   )
 
   const orAction = (
