@@ -56,7 +56,7 @@ const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players,
             <ul className="players-waiting-list">
               {[NORTH, WEST].map(displayPlayer)}
               <li>
-                {humanPlayers.length >= 2 && <Tip>Clique sur le nom d'un autre joueur pour rejoindre son équipe, et sur le tiens pour échanger les places des joueurs adverses.</Tip>}
+                {humanPlayers.length >= 2 && <Tip>Clique sur le nom d'un autre joueur pour rejoindre son équipe, et sur le tien pour échanger les places des joueurs adverses.</Tip>}
               </li>
               {[EAST, SOUTH].map(displayPlayer)}
             </ul>
