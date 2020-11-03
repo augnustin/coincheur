@@ -24,8 +24,9 @@ import Tip from './Tip';
 const Controls = ({humanPlayers, currentPlayer, distribute, swichTeams, players, tableId, preferences, setPreference}) => {
   const [isCopied, setIsCopied] = useState(false);
   const copyUrlToClipboard = () => {
-    navigator.clipboard.writeText(`${document.location.origin}?${queryParamToJoin}=${tableId}`);
-    setIsCopied(true);
+    navigator.clipboard.writeText(`${document.location.origin}?${queryParamToJoin}=${tableId}`).then(() => {
+      setIsCopied(true);
+    })
   }
 
   const disableDistribute = humanPlayers.length !== players.length;

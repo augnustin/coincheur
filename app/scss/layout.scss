@@ -65,6 +65,13 @@ body {
 }
 
 .section {
+  &.is-vertical {
+    @include mobile {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
   &.is-main {
     min-height: 100vh;
     padding-top: $navbar-height + 1rem;

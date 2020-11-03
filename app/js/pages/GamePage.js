@@ -23,7 +23,6 @@ const GamePage = ({gameId, subscribeServerUpdate, unsubscribeServerUpdate, match
   });
 
   useEffect(() => {
-    console.log('coucou', gameId)
     subscribeServerUpdate(tableId, username)
     // return () => {
     //   // unsubscribeServerUpdate(tableId);

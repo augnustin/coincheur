@@ -50,13 +50,11 @@ const LandingPage = ({location, history, tableId: currentTableId}) => {
   )
 
   const createNewTable = label => (
-    <div key="new" className="field">
-      <button className="button is-primary is-large">{label}</button>
-    </div>
+    <button className="button is-primary is-large">{label}</button>
   )
 
   const orAction = (
-    <p key="or" className="section has-text-centered">- OU -</p>
+    <p key="or" className="section is-vertical has-text-centered">- OU -</p>
   )
 
   const possibleActions = () => {
@@ -74,14 +72,16 @@ const LandingPage = ({location, history, tableId: currentTableId}) => {
 
   return (
     <Layout mode="container">
-      <form className="section is-vertical has-text-centered" action="/join" method="post" onSubmit={e => joinTable(e)}>
-        <h1 className="title is-1">Bienvenue</h1>
-        <p className="subtitle">Ici les cartes n'ont pas le COVID</p>
-        {mayNeedHelp && (
-          <p>
-            <Link className="button is-primary" to="/help">Comment ça marche ?</Link>
-          </p>
-        )}
+      <form className="has-text-centered" action="/join" method="post" onSubmit={e => joinTable(e)}>
+        <div className="section is-vertical">
+          <h1 className="title is-1">Bienvenue</h1>
+          <p className="subtitle">Ici les cartes n'ont pas le COVID</p>
+          {mayNeedHelp && (
+            <p>
+              <Link className="button is-primary" to="/help">Comment ça marche ?</Link>
+            </p>
+          )}
+        </div>
         <div className="section is-vertical">
           <div className="field">
             <input style={{maxWidth: '300px'}} className="input is-large" type="text" placeholder="Choisissez votre pseudo" maxLength="20" value={username} onChange={e => setUsernameAndSave(e.target.value)} required />

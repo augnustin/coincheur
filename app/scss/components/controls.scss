@@ -43,6 +43,8 @@ ul.players-waiting-list {
   min-height: 10rem;
   @include tablet {
     margin-top: 3rem;
+    width: 30rem;
+    min-height: 15rem;
     // margin-bottom: 3rem;
   }
   li {
@@ -86,8 +88,8 @@ ul.actions {
     &:not(:last-child) {
       margin-bottom: 2rem;
     }
-    p {
-      margin-top: 0.5rem;
-    }
+    // p {
+    //   margin-top: 0.5rem;
+    // }
   }
 }
