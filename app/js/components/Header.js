@@ -7,6 +7,7 @@ import { undo, distribute, reset } from '../redux/actions/socketActions';
 import { toggleIsLastTrickVisible } from '../redux/actions/localActions';
 import {isArray, isFunction} from '../../../shared/utils/boolean';
 import {selectCurrentPlayer, selectNbPlayers, selectTableId} from '../redux/selectors/game'
+const Logo = require('../../images/logo.png');
 
 const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVisible, tableId, reset}) => {
   const [menuShown, showMenu] = useState(false);
@@ -74,7 +75,8 @@ const Header = ({currentPlayer, nbPlayers, distribute, undo, toggleIsLastTrickVi
     <nav className="navbar is-fixed-top is-spaced" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item">
-          <h1>Coinche.me</h1>
+          <img src={Logo} />
+          <h1 className="is-hidden-mobile">Coinche.me</h1>
         </Link>
 
         <a onClick={toggleMenu} role="button" className={`navbar-burger burger ${menuShown ? 'is-active' : ''}`} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
