@@ -13,7 +13,7 @@
     "dev": "concurrently \"yarn watch-app\" \"yarn watch-server\"",
     "build": "parcel build -d build app/index.html",
     "server": "node -r esm server/index.js",
-    "start": "yarn install && yarn build && yarn watch-server",
+    "start": "yarn install && yarn build && yarn server",
     "test": "jest --watch *.test.js"
   },
   "dependencies": {
