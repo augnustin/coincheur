@@ -12,6 +12,7 @@ export const random = a => {
 
 export const first = a => a[0];
 export const last = a => a[a.length - 1];
+export const next = (a, i) => a[(i+1) % a.length];
 
 export const switchIndexes = (a, index1, index2) => {
   return Object.assign([], a, {[index1]: a[index2], [index2]: a[index1]});

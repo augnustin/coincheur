@@ -1,0 +1,24 @@
+@import '../variables';
+
+.declaration {
+	background: url(../../images/leather_1.png);
+	background-color: $background;
+	position: absolute;
+	top: 1rem;
+	bottom: 1rem;
+	left: 1rem;
+	right: 1rem;
+	margin: auto;
+	max-width: 50vw;
+	max-height: 50vh;
+	box-shadow: 0 0 1rem rgba(black, 0.5);
+	padding: 1.5rem;
+	text-align: center;
+	z-index: 1;
+
+	&.is-disabled {
+		pointer-events: none;
+		// opacity: 0.4;
+	}
+}
+

@@ -120,3 +120,45 @@ export function undo(tableId) {
     }
   }
 }
+
+export function declare(tableId, playerId, declaration) {
+  return {
+    type: actionTypes.NO_LOCAL_EFFECT,
+    emit: socketEvents.DISPATCH,
+    payload: {
+      tableId,
+      action: {
+        type: actionTypes.DECLARE,
+        payload: {playerId, declaration},
+      }
+    }
+  }
+}
+
+export function launchGame(tableId) {
+  return {
+    type: actionTypes.NO_LOCAL_EFFECT,
+    emit: socketEvents.DISPATCH,
+    payload: {
+      tableId,
+      action: {
+        type: actionTypes.LAUNCH_GAME,
+        payload: {},
+      }
+    }
+  }
+}
+
+export function getScore(tableId) {
+  return {
+    type: actionTypes.NO_LOCAL_EFFECT,
+    emit: socketEvents.DISPATCH,
+    payload: {
+      tableId,
+      action: {
+        type: actionTypes.GET_SCORE,
+        payload: {},
+      }
+    }
+  }
+}

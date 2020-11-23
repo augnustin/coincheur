@@ -6,14 +6,16 @@ import {pluralize} from '../../../shared/utils/string';
 import {random} from '../../../shared/utils/array';
 import { playCard, collect } from '../redux/actions';
 import {LocalStateContext} from '../pages/GamePage';
-import { selectCanCollect} from '../redux/selectors';
+import { selectCanCollect, selectActivePlayerName } from '../redux/selectors';
 
 import '../../scss/components/player.scss';
 
 import Hand from './Hand.js';
 // import Tricks from './Tricks.js';
 
-const Player = ({position, player, tricks, playRandomCard, canCollect, collect}) => {
+const HandSymbol = require('../../images/hand.svg');
+
+const Player = ({position, player, tricks, playRandomCard, canCollect, collect, activePlayerName}) => {
 
   const {tableId} = useContext(LocalStateContext);
 
@@ -34,8 +36,14 @@ const Player = ({position, player, tricks, playRandomCard, canCollect, collect})
   const playerTricks = tricks.filter(({playerIndex, _}) => playerIndex === index);
 
   const $name = (
-    <div className={`name ${disconnected ? 'has-text-danger' : ''}`} title={disconnected ? 'Déconnecté' : ''}>
-      <span className={!id ? 'clickable' : ''} onClick={handleClick} >{!id ? 'BOT' : name} {isDealer ? 'a distribué' : ''} ({pluralize(playerTricks.length, 'pli')})</span>
+    <div className={` level name ${disconnected ? 'has-text-danger' : ''}`} title={disconnected ? 'Déconnecté' : ''}>
+      {(name === activePlayerName) ?
+        <span className="level-item icon">
+          <img src={HandSymbol}/>
+        </span> :
+        null
+      }
+      <span className={`level-item ${!id ? 'clickable' : ''}`} onClick={handleClick} >{!id ? 'BOT' : name} {isDealer ? 'a distribué' : ''} ({pluralize(playerTricks.length, 'pli')})</span>
       &nbsp;
       {!id && canCollect && <button className="button is-small is-text is-rounded" onClick={e => collect(tableId, index)}>Ramasser</button> }
     </div>
@@ -61,6 +69,7 @@ const mapStateToProps = (state, ownProps) => ({
   player: state.players.find(p => (p.position === ownProps.position)),
   tricks: state.tricks,
   canCollect: selectCanCollect(state),
+  activePlayerName: selectActivePlayerName(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

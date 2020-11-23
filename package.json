@@ -10,10 +10,11 @@
     "cleanup": "rm -rf .cache build",
     "watch-app": "parcel watch -d build --hmr-port 36449 app/index.html",
     "watch-server": "nodemon -r esm --watch server server/index.js",
-    "dev": "yarn cleanup && concurrently \"yarn watch-app\" \"yarn watch-server\"",
+    "dev": "concurrently \"yarn watch-app\" \"yarn watch-server\"",
     "build": "parcel build -d build app/index.html",
     "server": "node -r esm server/index.js",
-    "start": "yarn install && yarn build && yarn server"
+    "start": "yarn install && yarn build && yarn watch-server",
+    "test": "jest --watch *.test.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -46,6 +47,8 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-wildcard": "^6.0.0",
     "concurrently": "^5.1.0",
+    "jest": "^25.3.0",
+    "marked": "^0.8.2",
     "nodemon": "^2.0.2",
     "sass": "^1.26.3"
   }

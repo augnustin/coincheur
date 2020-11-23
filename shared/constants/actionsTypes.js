@@ -6,6 +6,9 @@ const actionTypes = {
   COLLECT: 'COLLECT',
   NEW_GAME: 'NEW_GAME',
   UNDO: 'UNDO',
+  DECLARE: 'DECLARE',
+  LAUNCH_GAME: 'LAUNCH_GAME',
+  GET_SCORE: 'GET_SCORE',
 };
 
 export default actionTypes;

@@ -2,11 +2,11 @@ const undoReducer = (reducer) => {
   const INITIAL_STATE = {
     past: [],
     present: reducer(undefined, {}),
-    futur: [],
+    future: [],
   };
 
   return (state = INITIAL_STATE, action) => {
-    const {past, present, futur} = state;
+    const {past, present, future} = state;
 
     switch (action.type) {
       case 'UNDO':
@@ -16,16 +16,16 @@ const undoReducer = (reducer) => {
           ...state,
           past: newPast,
           present: previous,
-          futur: [present, ...futur],
+          future: [present, ...future],
         };
 
       case 'REDO':
-        const next = futur[0];
+        const next = future[0];
         const newFuture = future.slice(1);
         return {
           past: [...past, present],
           present: next,
-          futur: newFuture,
+          future: newFuture,
         };
 
       default:
@@ -36,7 +36,7 @@ const undoReducer = (reducer) => {
         return {
           past: [...past, present],
           present: newPresent,
-          futur: [],
+          future: [],
         }
     }
   };

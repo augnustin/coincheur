@@ -21,6 +21,9 @@ $input-color: $black;
 $link: darken($white, 20%);
 $link-hover: $blue;
 
+$box-background-color: $green;
+$modal-content-width: 100%;
+
 $navbar-background-color: transparent;
 $navbar-breakpoint: 10000px;
 $navbar-item-color: $white;
@@ -28,6 +31,10 @@ $navbar-item-hover-color: darken($white, 10%);
 $radius: 2rem;
 $easing: ease-in-out;
 $duration: .4s;
+
+$table-color: hsl(0, 0%, 21%);
+$table-background-color: $background;
+$table-striped-row-even-background-color: hsl(0, 0%, 98%);
 
 @import '~bulma/bulma';
 @import 'sections';
